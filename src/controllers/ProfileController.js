@@ -1,32 +1,41 @@
 import knex from "../database/knex/index.js";
+import { ProfileRepository } from "../repositories/ProfileRepository.js";
+import { ProfileService } from "../services/ProfileService.js";
 
 export class ProfileController {
 
     async index(request, response){
 
-        const Profile = () => knex('profile');
+        const profileRepository = new ProfileRepository();
+        const profileService = new ProfileService(profileRepository);
 
-        const profiles = await Profile().select();
-
+        const profiles = await profileService.index();
+               
         return response.status(200).json(profiles);
     }
     
     async show(request, response){
         const { id } = request.params;
         
-        return response.status(200).json({id});
+        const profileRepository = new ProfileRepository();
+        const profileService = new ProfileService(profileRepository);
+
+        const profile = await profileService.show(id);
+        
+
+        return response.status(200).json(profile);
     }
     
     async create(request, response){
-        const {name, password, email, avatar} = request.body;
+        const {name} = request.body;
         
         return response.status(201).json({name, password, email, avatar});
     }
     
     async update(request, response){
-        const {name, password, email, avatar} = request.body;
+        const {name} = request.body;
         
-        return response.status(200).json({name, password, email, avatar});
+        return response.status(200).json({name});
     }
     
     async delete(request, response){
