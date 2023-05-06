@@ -5,7 +5,8 @@
   "description": "The idea is to create a backend application with two profile types the users and admin. Where the user can see and buy dishes and admin can see, register, delete dishes.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./src/server.js"
+    "dev": "nodemon ./src/server.js",
+    "migrate": "npx knex migrate:latest"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,10 @@
   "dependencies": {
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
-    "node-modules": "^1.0.1"
+    "knex": "^2.4.2",
+    "node-modules": "^1.0.1",
+    "sqlite": "^4.2.0",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

@@ -1,30 +1,35 @@
+import knex from "../database/knex/index.js";
 
 export class ProfileController {
 
-    index(request, response){
+    async index(request, response){
 
-        return response.status(200).json({});
+        const Profile = () => knex('profile');
+
+        const profiles = await Profile().select();
+
+        return response.status(200).json(profiles);
     }
     
-    show(request, response){
+    async show(request, response){
         const { id } = request.params;
         
         return response.status(200).json({id});
     }
     
-    create(request, response){
+    async create(request, response){
         const {name, password, email, avatar} = request.body;
         
         return response.status(201).json({name, password, email, avatar});
     }
     
-    update(request, response){
+    async update(request, response){
         const {name, password, email, avatar} = request.body;
         
         return response.status(200).json({name, password, email, avatar});
     }
     
-    delete(request, response){
+    async delete(request, response){
         const {id} = request.params;
         
         return response.status(202).json({id});
