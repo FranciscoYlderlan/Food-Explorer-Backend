@@ -29,7 +29,7 @@ export class UserController {
         const userRepository = new UserRepository();
         const userService = new UserService(userRepository);
 
-        await userService.update({ id, name, password, email, avatar });
+        await userService.update({ id, name, password, newPassword, email, avatar });
 
         return response.status(200).json({});
     }
