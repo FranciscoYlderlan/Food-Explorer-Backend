@@ -1,5 +1,5 @@
 import { UserRepository } from '../repositories/User/Repository.js';
-import { UserService } from '../services/User/UserService.js';
+import { UserService } from '../services/user/UserService.js';
 
 export class UserController {
     async index(request, response) {

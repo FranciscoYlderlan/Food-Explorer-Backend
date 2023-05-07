@@ -1,5 +1,5 @@
 import { ProfileRepository } from '../repositories/profile/Repository.js';
-import { ProfileService } from '../services/Profile/ProfileService.js';
+import { ProfileService } from '../services/profile/ProfileService.js';
 
 export class ProfileController {
     async index(request, response) {
