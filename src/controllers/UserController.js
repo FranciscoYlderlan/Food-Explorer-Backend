@@ -1,33 +1,47 @@
+import { UserRepository } from '../repositories/User/Repository.js';
+import { UserService } from '../services/User/UserService.js';
 
 export class UserController {
+    async index(request, response) {
+        return response.status(200).json({});
+    }
 
-    index(request, response){
+    async show(request, response) {
+        const { id } = request.params;
+
+        return response.status(200).json({ id });
+    }
+
+    async create(request, response) {
+        const { name, password, email, avatar } = request.body;
+
+        const userRepository = new UserRepository();
+        const userService = new UserService(userRepository);
+
+        await userService.create({ name, password, email, avatar });
+
+        return response.status(201).json({ name, password, email, avatar });
+    }
+
+    async update(request, response) {
+        const { name, password, newPassword, email, avatar } = request.body;
+        const { id } = request.params;
+        const userRepository = new UserRepository();
+        const userService = new UserService(userRepository);
+
+        await userService.update({ id, name, password, email, avatar });
 
         return response.status(200).json({});
     }
-    
-    show(request, response){
-        const { id } = request.params;
-        
-        return response.status(200).json({id});
-    }
-    
-    create(request, response){
-        const {name, password, email, avatar} = request.body;
-        
-        return response.status(201).json({name, password, email, avatar});
-    }
-    
-    update(request, response){
-        const {name, password, email, avatar} = request.body;
-        
-        return response.status(200).json({name, password, email, avatar});
-    }
-    
-    delete(request, response){
-        const {id} = request.params;
-        
-        return response.status(202).json({id});
-    }
 
+    async delete(request, response) {
+        const { id } = request.params;
+
+        const userRepository = new UserRepository();
+        const userService = new UserService(userRepository);
+
+        await userService.delete(id);
+
+        return response.status(202).json({});
+    }
 }
