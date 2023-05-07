@@ -2,7 +2,7 @@ export async function up(knex) {
     return knex.schema.createTable('dish', (table) => {
         table.increments('id').notNullable().primary();
         table.text('name').notNullable();
-        table.text('description').nullable();
+        table.text('description').notNullable();
         table.text('picture').nullable();
         table.float('price').notNullable();
         table.integer('category_id').notNullable().references('id').inTable('category');
