@@ -26,6 +26,7 @@ export class UserController {
     async update(request, response) {
         const { name, password, newPassword, email, avatar } = request.body;
         const { id } = request.params;
+
         const userRepository = new UserRepository();
         const userService = new UserService(userRepository);
 
