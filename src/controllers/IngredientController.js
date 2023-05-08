@@ -1,28 +1,56 @@
+import { IngredientService } from '../services/ingredient/IngredientService.js';
+import { IngredientRepository } from '../repositories/ingredient/Repository.js';
+
 export class IngredientController {
-    index(request, response) {
-        return response.status(200).json({});
+    async index(request, response) {
+        const ingredientRepository = new IngredientRepository();
+        const ingredientService = new IngredientService(ingredientRepository);
+
+        const ingredients = await ingredientService.index();
+
+        return response.status(200).json(ingredients);
     }
 
-    show(request, response) {
+    async show(request, response) {
         const { id } = request.params;
 
-        return response.status(200).json({ id });
+        const ingredientRepository = new IngredientRepository();
+        const ingredientService = new IngredientService(ingredientRepository);
+
+        const ingredient = await ingredientService.show(id);
+
+        return response.status(200).json(ingredient);
     }
 
-    create(request, response) {
-        const { name, password, email, avatar } = request.body;
+    async create(request, response) {
+        const { name, picture, amount } = request.body;
 
-        return response.status(201).json({ name, password, email, avatar });
+        const ingredientRepository = new IngredientRepository();
+        const ingredientService = new IngredientService(ingredientRepository);
+
+        await ingredientService.create({ name, picture, amount });
+
+        return response.status(201).json({});
     }
 
-    update(request, response) {
-        const { name, password, email, avatar } = request.body;
+    async update(request, response) {
+        const { name, picture, amount } = request.body;
 
-        return response.status(200).json({ name, password, email, avatar });
+        const ingredientRepository = new IngredientRepository();
+        const ingredientService = new IngredientService(ingredientRepository);
+
+        await ingredientService.update({ name, picture, amount });
+
+        return response.status(200).json({ name, picture, amount });
     }
 
-    delete(request, response) {
+    async delete(request, response) {
         const { id } = request.params;
+
+        const ingredientRepository = new IngredientRepository();
+        const ingredientService = new IngredientService(ingredientRepository);
+
+        await ingredientService.update({ id });
 
         return response.status(202).json({ id });
     }

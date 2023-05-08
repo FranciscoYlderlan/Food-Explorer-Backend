@@ -3,20 +3,25 @@ import { DishService } from '../services/dish/DishService.js';
 
 export class DishController {
     async index(request, response) {
+        const { search } = request.query;
+
         const dishRepository = new DishRepository();
         const dishService = new DishService(dishRepository);
 
-        // const dishes = await dishService.index();
+        const dishes = await dishService.index(search);
 
-        const ingredients = await dishRepository.findAllDishIngredients(1);
-
-        return response.status(200).json(ingredients);
+        return response.status(200).json(dishes);
     }
 
     async show(request, response) {
         const { id } = request.params;
 
-        return response.status(200).json({ id });
+        const dishRepository = new DishRepository();
+        const dishService = new DishService(dishRepository);
+
+        const dish = await dishService.show(id);
+
+        return response.status(200).json(dish);
     }
 
     async create(request, response) {
@@ -31,10 +36,23 @@ export class DishController {
     }
 
     async update(request, response) {
-        const { name, description, picture, price, category } = request.body;
+        const { name, description, picture, price, category_id, ingredients } = request.body;
         const { id } = request.params;
 
-        return response.status(200).json({ name, password, email, avatar });
+        const dishRepository = new DishRepository();
+        const dishService = new DishService(dishRepository);
+
+        await dishService.update({
+            id,
+            name,
+            description,
+            picture,
+            price,
+            category_id,
+            ingredients,
+        });
+
+        return response.status(200).json({});
     }
 
     async delete(request, response) {

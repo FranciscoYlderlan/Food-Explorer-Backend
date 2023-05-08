@@ -1,17 +1,39 @@
 import dayjs from 'dayjs';
 import { AppError } from '../../utils/AppError.js';
-import * as utils from '../../utils/Provider.js';
 
 export class DishService {
     constructor(repository) {
         this.repository = repository;
     }
-    async index() {
-        const dishes = await this.repository.findAllDishes();
+    async index(keyword) {
+        const dishes = await this.repository.findDishesByKeyword(keyword);
 
-        return dishes;
+        const dishesWithIngredients = await Promise.all(
+            dishes.map(async (dish) => {
+                const ingredients = await this.repository.findAllDishIngredients(dish.id);
+                return {
+                    ...dish,
+                    ingredients,
+                };
+            })
+        );
+
+        return dishesWithIngredients;
     }
-    async show() {}
+    async show(id) {
+        const dish = await this.repository.findById(id);
+
+        if (!dish) throw new AppError('Prato não encontrado.', 404);
+
+        const ingredients = await this.repository.findAllDishIngredients(dish.id);
+
+        const dishWithIngredients = {
+            ...dish,
+            ingredients,
+        };
+
+        return dishWithIngredients;
+    }
 
     async create({ name, description, picture, price, category_id, ingredients }) {
         const nameInUse = await this.repository.findByName(name);
@@ -57,17 +79,20 @@ export class DishService {
         dish.price = price ?? dish.price;
         dish.category_id = category_id ?? dish.category_id;
 
-        const insertedIngredients = await this.repository.findAllDishIngredients(dish.id);
+        ingredients = ingredients ?? [];
 
-        const formattedIngredients = insertedIngredients.map((ingredient) => {
-            return ingredient.name;
+        if (ingredients.lenght == 0) {
+            throw new AppError('Informe os ingredientes do prato.');
+        }
+
+        const formattedIngredients = ingredients.map((ingredient) => {
+            return {
+                name: ingredient,
+            };
         });
 
-        const equalsIngredients = utils.isArrayEquals(formattedIngredients, ingredients);
-
-        if (!equalsIngredients) {
-            await this.repository.insertIngredientsDish(ingredients, dish.id);
-        }
+        await this.repository.removeIngredientsDish(dish.id);
+        await this.repository.insertIngredientsDish(formattedIngredients, dish.id);
 
         dish.updated_at = dayjs().format();
 

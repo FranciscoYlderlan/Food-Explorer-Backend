@@ -19,17 +19,20 @@ export class DishRepository {
         return dish;
     }
 
-    async findAllDishes() {
+    async findDishesByKeyword(keyword) {
         const dishes = await this.Dishes()
-            .select('dish.*', 'category.name')
-            .innerJoin('category', 'category_id', 'category.id');
+            .select('dish.*', 'ingredient.name as ingredient_name')
+            .innerJoin('ingredient', 'dish_id', 'dish.id')
+            .whereLike('ingredient_name', `%${keyword}%`)
+            .orWhereLike('dish.name', `%${keyword}%`)
+            .groupBy('dish.id');
 
         return dishes;
     }
 
+    // talvez altere de nome para um objeto contendo todos os elementos
     async findAllDishIngredients(dish_id) {
-        const ingredients = await this.Ingredients().select('name').where({ dish_id });
-        
+        const ingredients = await this.Ingredients().where({ dish_id });
 
         return ingredients;
     }
@@ -44,6 +47,12 @@ export class DishRepository {
         const insertedIngredients = await this.Ingredients().insert(ingredients).where({ dish_id });
 
         return insertedIngredients;
+    }
+
+    async removeIngredientsByDish({ dish_id }) {
+        const removedIngredients = await this.Ingredients().where({ dish_id }).del();
+
+        return removedIngredients;
     }
 
     async insert({ name, description, picture, price, category_id, updated_at, created_at }) {
