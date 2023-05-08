@@ -58,6 +58,11 @@ export class DishController {
     async delete(request, response) {
         const { id } = request.params;
 
-        return response.status(202).json({ id });
+        const dishRepository = new DishRepository();
+        const dishService = new DishService(dishRepository);
+
+        await dishService.delete(id);
+
+        return response.status(202).json({});
     }
 }

@@ -6,22 +6,20 @@ export class IngredientService {
     }
 
     async index() {
-        
+        const ingredients = await this.repository.findAll();
+
+        return ingredients;
     }
 
-    async show() {
+    async show(id) {
+        const ingredient = await this.repository.findById(id);
 
+        return ingredient;
     }
 
-    async create() {
+    async create() {}
 
-    }
+    async update() {}
 
-    async update() {
-
-    }
-
-    async delete() {
-
-    }
+    async delete() {}
 }

@@ -20,7 +20,7 @@ export class UserController {
 
         await userService.create({ name, password, email, avatar });
 
-        return response.status(201).json({ name, password, email, avatar });
+        return response.status(201).json({});
     }
 
     async update(request, response) {

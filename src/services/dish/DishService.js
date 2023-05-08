@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from '../../configs/dayjs.js';
 import { AppError } from '../../utils/AppError.js';
 
 export class DishService {
@@ -51,7 +51,7 @@ export class DishService {
         const updated_at = dayjs().format();
         const created_at = dayjs().format();
 
-        const [id] = await this.repository.insert({
+        const [dish_id] = await this.repository.insert({
             name,
             description,
             picture,
@@ -61,7 +61,14 @@ export class DishService {
             created_at,
         });
 
-        await this.repository.insertIngredientsDish({ ingredients, dish_id: id });
+        const ingredientsInsert = ingredients.map((ingredient) => {
+            return {
+                ...ingredient,
+                dish_id,
+            };
+        });
+
+        await this.repository.insertIngredientsByDish(ingredientsInsert);
     }
 
     async update({ id, name, description, picture, price, category_id, ingredients }) {
@@ -84,19 +91,19 @@ export class DishService {
         if (ingredients.lenght == 0) {
             throw new AppError('Informe os ingredientes do prato.');
         }
-
-        const formattedIngredients = ingredients.map((ingredient) => {
+        const ingredientsInsert = ingredients.map((ingredient) => {
             return {
-                name: ingredient,
+                ...ingredient,
+                dish_id: dish.id,
             };
         });
-
-        await this.repository.removeIngredientsDish(dish.id);
-        await this.repository.insertIngredientsDish(formattedIngredients, dish.id);
 
         dish.updated_at = dayjs().format();
 
         await this.repository.update(dish);
+
+        await this.repository.removeIngredientsByDish(dish.id);
+        await this.repository.insertIngredientsByDish(ingredientsInsert);
     }
 
     async delete(id) {

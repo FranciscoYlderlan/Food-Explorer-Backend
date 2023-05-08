@@ -43,13 +43,13 @@ export class DishRepository {
         return dish;
     }
 
-    async insertIngredientsByDish({ ingredients, dish_id }) {
-        const insertedIngredients = await this.Ingredients().insert(ingredients).where({ dish_id });
+    async insertIngredientsByDish(ingredients) {
+        const insertedIngredients = await this.Ingredients().insert(ingredients);
 
         return insertedIngredients;
     }
 
-    async removeIngredientsByDish({ dish_id }) {
+    async removeIngredientsByDish(dish_id) {
         const removedIngredients = await this.Ingredients().where({ dish_id }).del();
 
         return removedIngredients;

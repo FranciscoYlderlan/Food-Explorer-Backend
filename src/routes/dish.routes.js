@@ -8,7 +8,7 @@ const dishController = new DishController();
 dishRoutes.get('/', dishController.index);
 dishRoutes.get('/:id', dishController.show);
 dishRoutes.post('/', dishController.create);
-dishRoutes.put('/', dishController.update);
+dishRoutes.put('/:id', dishController.update);
 dishRoutes.delete('/:id', dishController.delete);
 
-export  { dishRoutes };
+export { dishRoutes };

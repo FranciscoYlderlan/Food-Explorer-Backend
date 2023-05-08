@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from '../../configs/dayjs.js';
 import { AppError } from '../../utils/AppError.js';
 import { hash, compare } from 'bcrypt';
 
