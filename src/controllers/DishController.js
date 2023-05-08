@@ -1,6 +1,16 @@
+import { DishRepository } from '../repositories/dish/Repository.js';
+import { DishService } from '../services/dish/DishService.js';
+
 export class DishController {
     async index(request, response) {
-        return response.status(200).json({});
+        const dishRepository = new DishRepository();
+        const dishService = new DishService(dishRepository);
+
+        // const dishes = await dishService.index();
+
+        const ingredients = await dishRepository.findAllDishIngredients(1);
+
+        return response.status(200).json(ingredients);
     }
 
     async show(request, response) {
@@ -10,9 +20,14 @@ export class DishController {
     }
 
     async create(request, response) {
-        const { name, description, picture, price, category } = request.body;
+        const { name, description, picture, price, category_id, ingredients } = request.body;
 
-        return response.status(201).json({ name, password, email, avatar });
+        const dishRepository = new DishRepository();
+        const dishService = new DishService(dishRepository);
+
+        await dishService.create({ name, description, picture, price, category_id, ingredients });
+
+        return response.status(201).json({});
     }
 
     async update(request, response) {
