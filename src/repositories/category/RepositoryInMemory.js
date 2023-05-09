@@ -9,7 +9,7 @@ export class CategoryRepositoryInMemory {
         return categories;
     }
     async findById(id) {
-        const category = this.Categories.filter((category) => category.id == id);
+        const category = this.Categories.filter(category => category.id == id);
 
         return category;
     }

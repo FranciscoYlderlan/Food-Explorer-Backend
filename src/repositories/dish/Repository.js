@@ -7,12 +7,6 @@ export class DishRepository {
         this.Categories = () => knex('category');
     }
 
-    async findByName(name) {
-        const dish = await this.Dishes().where({ name }).first();
-
-        return dish;
-    }
-
     async findById(id) {
         const dish = await this.Dishes().where({ id }).first();
 
@@ -30,15 +24,18 @@ export class DishRepository {
         return dishes;
     }
 
-    // talvez altere de nome para um objeto contendo todos os elementos
     async findAllDishIngredients(dish_id) {
         const ingredients = await this.Ingredients().where({ dish_id });
 
         return ingredients;
     }
 
-    async checkNameInUse({ name, id }) {
-        const dish = await this.Dishes().where({ name }).whereNot({ id }).first();
+    async checkNameInUse({ name, id = null }) {
+        if (id) {
+            const dish = await this.Dishes().whereLike('name', name).whereNot({ id }).first();
+        } else {
+            const dish = await this.Dishes().whereLike('name', name).first();
+        }
 
         return dish;
     }

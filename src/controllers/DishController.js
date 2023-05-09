@@ -1,5 +1,6 @@
 import { DishRepository } from '../repositories/dish/Repository.js';
 import { DishService } from '../services/dish/DishService.js';
+import knex from '../database/knex/index.js';
 
 export class DishController {
     async index(request, response) {

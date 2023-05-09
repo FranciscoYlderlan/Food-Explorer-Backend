@@ -9,7 +9,7 @@ export class DishService {
         const dishes = await this.repository.findDishesByKeyword(keyword);
 
         const dishesWithIngredients = await Promise.all(
-            dishes.map(async (dish) => {
+            dishes.map(async dish => {
                 const ingredients = await this.repository.findAllDishIngredients(dish.id);
                 return {
                     ...dish,
@@ -36,7 +36,7 @@ export class DishService {
     }
 
     async create({ name, description, picture, price, category_id, ingredients }) {
-        const nameInUse = await this.repository.findByName(name);
+        const nameInUse = await this.repository.checkNameInUse({ name });
 
         if (nameInUse) throw new AppError('Nome do prato já cadastrado.', 409);
 
@@ -61,7 +61,7 @@ export class DishService {
             created_at,
         });
 
-        const ingredientsInsert = ingredients.map((ingredient) => {
+        const ingredientsInsert = ingredients.map(ingredient => {
             return {
                 ...ingredient,
                 dish_id,
@@ -91,7 +91,7 @@ export class DishService {
         if (ingredients.lenght == 0) {
             throw new AppError('Informe os ingredientes do prato.');
         }
-        const ingredientsInsert = ingredients.map((ingredient) => {
+        const ingredientsInsert = ingredients.map(ingredient => {
             return {
                 ...ingredient,
                 dish_id: dish.id,
