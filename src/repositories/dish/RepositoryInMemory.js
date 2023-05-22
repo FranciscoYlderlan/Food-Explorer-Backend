@@ -1,3 +1,5 @@
+export { compare } from '../../utils/Math.js';
+
 export class DishRepository {
     constructor(dishes, ingredients, categories) {
         this.Dishes = dishes;
@@ -42,8 +44,12 @@ export class DishRepository {
 
             return dishHasKeyword || ingredientHasKeyword;
         });
-        //Group by
 
+        //Order by
+        dishes = dishes.sort(compare);
+
+        //Group by
+        
         let name = '';
         dishes = await dishes.filter(dish => {
             if (name != dish.name) {
