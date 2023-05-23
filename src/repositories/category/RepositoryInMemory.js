@@ -4,12 +4,12 @@ export class CategoryRepositoryInMemory {
     }
 
     async showAll() {
-        const categories = this.Categories;
+        const categories = await this.Categories;
 
         return categories;
     }
     async findById(id) {
-        const category = this.Categories.filter(category => category.id == id);
+        const category = await this.Categories.filter(category => category.id == id);
 
         return category;
     }
