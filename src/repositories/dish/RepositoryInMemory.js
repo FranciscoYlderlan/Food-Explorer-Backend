@@ -46,7 +46,7 @@ export class DishRepository {
         });
 
         //Order by
-        dishes = dishes.sort(compare);
+        dishes = dishes.sort(compare); // deixar essa função genérica
 
         //Group by
         
