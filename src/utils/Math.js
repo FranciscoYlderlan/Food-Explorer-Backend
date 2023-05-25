@@ -8,6 +8,4 @@ function compare(a, b) {
     return 0;
 }
 
-export const functions = {
-    compare,
-};
+export { compare };

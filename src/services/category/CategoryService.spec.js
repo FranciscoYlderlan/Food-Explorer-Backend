@@ -3,7 +3,7 @@ import { CategoryService } from '../category/CategoryService.js';
 
 describe('CategoryService', () => {
     it('should show all items', async () => {
-        const Category = [
+        const Categories = [
             {
                 id: 1,
                 name: 'Refeição',
@@ -20,19 +20,19 @@ describe('CategoryService', () => {
                 description: null,
             },
         ];
-        const categoryRepositoryInMemory = new CategoryRepositoryInMemory(Category);
+        const categoryRepositoryInMemory = new CategoryRepositoryInMemory(Categories);
         const categoryService = new CategoryService(categoryRepositoryInMemory);
         const result = await categoryService.index();
 
-        expect(result).toHaveLength(Category.length);
+        expect(result).toHaveLength(Categories.length);
 
-        Category.forEach(item => {
+        Categories.forEach(item => {
             expect(result).toContain(item);
         });
     });
 
     it('should show specific item', async () => {
-        const Category = [
+        const Categories = [
             {
                 id: 1,
                 name: 'Refeição',
@@ -50,10 +50,10 @@ describe('CategoryService', () => {
             },
         ];
 
-        const categoryRepositoryInMemory = new CategoryRepositoryInMemory(Category);
+        const categoryRepositoryInMemory = new CategoryRepositoryInMemory(Categories);
         const categoryService = new CategoryService(categoryRepositoryInMemory);
 
-        Category.forEach(async item => {
+        Categories.forEach(async item => {
             const [result] = await categoryService.show(item.id);
             expect(result).toBe(item);
         });

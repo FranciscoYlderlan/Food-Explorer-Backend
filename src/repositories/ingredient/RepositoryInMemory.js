@@ -1,6 +1,6 @@
 import knex from '../../database/knex/index.js';
 
-export class IngredientRepository {
+export class IngredientRepositoryInMemory {
     constructor() {
         this.Ingredients = () => knex('ingredient');
         this.Dishes = () => knex('dish');

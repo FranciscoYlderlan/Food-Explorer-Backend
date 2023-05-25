@@ -1,6 +1,6 @@
-export { compare } from '../../utils/Math.js';
+import { compare } from '../../utils/Math.js';
 
-export class DishRepository {
+export class DishRepositoryInMemory {
     constructor(dishes, ingredients, categories) {
         this.Dishes = dishes;
         this.Ingredients = ingredients;
@@ -16,7 +16,7 @@ export class DishRepository {
     }
 
     async findById(id) {
-        const dish = await this.Dishes.filter(dish => dish.id == id);
+        const [dish] = await this.Dishes.filter(dish => dish.id == id);
 
         return dish;
     }
@@ -49,7 +49,7 @@ export class DishRepository {
         dishes = dishes.sort(compare); // deixar essa função genérica
 
         //Group by
-        
+
         let name = '';
         dishes = await dishes.filter(dish => {
             if (name != dish.name) {
@@ -73,11 +73,13 @@ export class DishRepository {
         let dish = [];
 
         if (id) {
-            dish = await this.Dishes.filter(
+            [dish] = await this.Dishes.filter(
                 dish => dish.name.toLowerCase() == name.toLowerCase() && dish.id !== id
             );
         } else {
-            dish = await this.Dishes.filter(dish => dish.name.toLowerCase() == name.toLowerCase());
+            [dish] = await this.Dishes.filter(
+                dish => dish.name.toLowerCase() == name.toLowerCase()
+            );
         }
 
         return dish;
@@ -96,15 +98,18 @@ export class DishRepository {
 
         await this.Ingredients.push(...ingredients);
 
+        // this.Ingredients = await [...this.Ingredients, ingredients];
+
         const insertedIngredients = await this.Ingredients.slice(index);
 
-        return insertedIngredients;
+        return this.Ingredients;
     }
 
     async removeIngredientsByDish(dish_id) {
         this.Ingredients = await this.Ingredients.filter(
             ingredient => ingredient.dish_id != dish_id
         );
+
         return this.Ingredients;
     }
 
@@ -121,7 +126,7 @@ export class DishRepository {
             created_at,
         });
 
-        return id;
+        return [id];
     }
 
     async update({ id, name, description, picture, price, category_id, updated_at }) {
@@ -150,6 +155,6 @@ export class DishRepository {
 
         this.Ingredients = await this.removeIngredientsByDish(id);
 
-        return this.Dishes;
+        return [this.Dishes, this.Ingredients];
     }
 }

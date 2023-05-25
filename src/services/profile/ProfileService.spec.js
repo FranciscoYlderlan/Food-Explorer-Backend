@@ -3,7 +3,7 @@ import { ProfileService } from '../profile/ProfileService.js';
 
 describe('ProfileService', () => {
     it('should show all items', async () => {
-        const Profile = [
+        const Profiles = [
             {
                 id: 1,
                 name: 'Administrador',
@@ -16,20 +16,20 @@ describe('ProfileService', () => {
             },
         ];
 
-        const profileRepositoryInMemory = new ProfileRepositoryInMemory(Profile);
+        const profileRepositoryInMemory = new ProfileRepositoryInMemory(Profiles);
         const profileService = new ProfileService(profileRepositoryInMemory);
 
         const result = await profileService.index();
 
-        expect(result).toHaveLength(Profile.length);
+        expect(result).toHaveLength(Profiles.length);
 
-        Profile.forEach(item => {
+        Profiles.forEach(item => {
             expect(result).toContain(item);
         });
     });
 
     it('should show specific item', async () => {
-        const Profile = [
+        const Profiles = [
             {
                 id: 1,
                 name: 'Administrador',
@@ -42,10 +42,10 @@ describe('ProfileService', () => {
             },
         ];
 
-        const profileRepositoryInMemory = new ProfileRepositoryInMemory(Profile);
+        const profileRepositoryInMemory = new ProfileRepositoryInMemory(Profiles);
         const profileService = new ProfileService(profileRepositoryInMemory);
 
-        Profile.forEach(async item => {
+        Profiles.forEach(async item => {
             const [result] = await profileService.show(item.id);
             expect(result).toBe(item);
         });
