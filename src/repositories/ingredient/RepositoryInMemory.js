@@ -1,18 +1,17 @@
 import knex from '../../database/knex/index.js';
 
 export class IngredientRepositoryInMemory {
-    constructor() {
-        this.Ingredients = () => knex('ingredient');
-        this.Dishes = () => knex('dish');
+    constructor(ingredients) {
+        this.Ingredients = ingredients;
     }
 
-    async showAll() {
+    async findAll() {
         const ingredientes = this.Ingredients;
 
         return ingredientes;
     }
     async findById(id) {
-        const ingredients = this.Ingredients.filter(ingredient => ingredient.id == id);
+        const [ingredients] = this.Ingredients.filter(ingredient => ingredient.id == id);
 
         return ingredients;
     }

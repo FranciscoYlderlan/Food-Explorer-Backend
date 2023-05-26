@@ -3,7 +3,7 @@ export class CategoryRepositoryInMemory {
         this.Categories = categories;
     }
 
-    async showAll() {
+    async findAll() {
         const categories = await this.Categories;
 
         return categories;

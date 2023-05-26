@@ -6,7 +6,7 @@ export class CategoryService {
     }
 
     async index() {
-        const categories = await this.repository.showAll();
+        const categories = await this.repository.findAll();
 
         return categories;
     }
