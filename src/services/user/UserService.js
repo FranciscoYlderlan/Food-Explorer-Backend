@@ -56,12 +56,16 @@ export class UserService {
             user.password = encryptedPassword;
         }
 
+        const { id: profile_id } = await this.repository.findUserProfile('Usuário');
+
+        user.profile_id = profile_id;
         user.updated_at = dayjs().format();
 
         await this.repository.update(user);
     }
 
     async delete(id) {
-        await this.repository.delete(id);
+        const users = await this.repository.delete(id);
+        return users;
     }
 }

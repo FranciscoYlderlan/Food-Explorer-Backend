@@ -31,7 +31,7 @@ export class UserRepository {
     }
 
     async insert({ name, password, email, avatar, profile_id, updated_at, created_at }) {
-        const user = await this.Users().insert({
+        const [id] = await this.Users().insert({
             name,
             password,
             email,
@@ -41,7 +41,7 @@ export class UserRepository {
             created_at,
         });
 
-        return user;
+        return id;
     }
 
     async update({ id, name, password, email, avatar, profile_id, updated_at }) {

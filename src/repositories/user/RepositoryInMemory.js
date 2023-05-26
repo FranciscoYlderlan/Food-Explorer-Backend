@@ -1,17 +1,17 @@
-export class UserRepository {
-    constructor({ users, profiles }) {
+export class UserRepositoryInMemory {
+    constructor(users, profiles) {
         this.Users = users;
         this.Profiles = profiles;
     }
 
     async findById(id) {
-        const user = await this.Users.filter(user => user.id == id);
+        const [user] = await this.Users.filter(user => user.id == id);
 
         return user;
     }
 
     async findByEmail(email) {
-        const user = await this.Users.filter(user => user.id == id);
+        const [user] = await this.Users.filter(user => user.email == email);
 
         return user;
     }
@@ -20,27 +20,28 @@ export class UserRepository {
         let user = [];
 
         if (id) {
-            user = await this.Users.filter(
+            [user] = await this.Users.filter(
                 user => user.email.toLowerCase() == email.toLowerCase() && user.id !== id
             );
         } else {
-            user = await this.Users.filter(user => user.email.toLowerCase() == email.toLowerCase());
+            [user] = await this.Users.filter(
+                user => user.email.toLowerCase() == email.toLowerCase()
+            );
         }
 
         return user;
     }
 
     async findUserProfile(name) {
-        const profile = await this.Profiles.filter(profile =>
+        const [profile] = await this.Profiles.filter(profile =>
             profile.name.toLowerCase().includes(name.toLowerCase())
         );
-
         return profile;
     }
 
     async insert({ name, password, email, avatar, profile_id, updated_at, created_at }) {
         const id = Math.floor(Math.random() * 100);
-        await this.User.push({
+        await this.Users.push({
             id,
             name,
             password,
@@ -51,7 +52,7 @@ export class UserRepository {
             created_at,
         });
 
-        return id;
+        return this.Users;
     }
 
     async update({ id, name, password, email, avatar, profile_id, updated_at }) {

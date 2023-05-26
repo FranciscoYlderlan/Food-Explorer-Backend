@@ -31,7 +31,6 @@ export class DishService {
 
         return dishWithIngredients;
     }
-
     async create({ name, description, picture, price, category_id, ingredients }) {
         const nameInUse = await this.repository.checkNameInUse({ name });
 
@@ -68,7 +67,6 @@ export class DishService {
         await this.repository.insertIngredientsByDish(ingredientsInsert);
         return dish_id;
     }
-
     async update({ id, name, description, picture, price, category_id, ingredients }) {
         const dish = await this.repository.findById(id);
 
@@ -104,7 +102,6 @@ export class DishService {
         const ingredients_ = await this.repository.insertIngredientsByDish(ingredientsInsert);
         return ingredients_;
     }
-
     async delete(id) {
         const dishes = await this.repository.delete(id);
         return dishes;

@@ -1,5 +1,4 @@
 import { DishRepositoryInMemory } from '../../repositories/dish/RepositoryInMemory.js';
-import { AppError } from '../../utils/AppError.js';
 import { DishService } from '../dish/DishService.js';
 
 describe('DishService', () => {

@@ -126,7 +126,7 @@ export class DishRepositoryInMemory {
             created_at,
         });
 
-        return [id];
+        return this.Dishes;
     }
 
     async update({ id, name, description, picture, price, category_id, updated_at }) {
