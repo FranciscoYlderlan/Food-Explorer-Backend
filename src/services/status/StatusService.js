@@ -1,22 +1,22 @@
 import { AppError } from '../../utils/AppError.js';
 
-export class ProfileService {
+export class StatusService {
     constructor(repository) {
         this.repository = repository;
     }
 
     async index() {
-        const profiles = await this.repository.findAll();
+        const status = await this.repository.findAll();
 
-        return profiles;
+        return status;
     }
 
     async show(id) {
-        const profile = await this.repository.findById(id);
+        const status = await this.repository.findById(id);
 
-        if (!profile) new AppError('Perfil não encontrado', 404);
+        if (!status) new AppError('Status não encontrado', 404);
 
-        return profile;
+        return status;
     }
 
     async create(request, response) {}

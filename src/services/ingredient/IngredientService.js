@@ -1,5 +1,3 @@
-import knex from '../../database/knex/index.js';
-
 export class IngredientService {
     constructor(repository) {
         this.repository = repository;

@@ -5,7 +5,7 @@ export class CategoryRepository {
         this.Categories = () => knex('category');
     }
 
-    async showAll() {
+    async findAll() {
         const categories = await this.Categories();
 
         return categories;

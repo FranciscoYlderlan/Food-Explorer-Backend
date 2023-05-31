@@ -1,5 +1,5 @@
 export async function up(knex) {
-    return knex.schema.createTable('dish', (table) => {
+    return knex.schema.createTable('dish', table => {
         table.increments('id').notNullable().primary();
         table.text('name').notNullable();
         table.text('description').notNullable();

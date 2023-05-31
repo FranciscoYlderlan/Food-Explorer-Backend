@@ -5,7 +5,7 @@ export class ProfileRepository {
         this.Profiles = () => knex('profile');
     }
 
-    async showAll() {
+    async findAll() {
         const profiles = await this.Profiles();
 
         return profiles;

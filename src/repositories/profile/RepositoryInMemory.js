@@ -3,7 +3,7 @@ export class ProfileRepositoryInMemory {
         this.Profiles = profiles;
     }
 
-    async showAll() {
+    async findAll() {
         const profiles = this.Profiles;
 
         return profiles;
