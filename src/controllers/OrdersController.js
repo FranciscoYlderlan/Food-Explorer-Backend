@@ -3,30 +3,31 @@ import { OrdersService } from '../services/orders/OrdersService.js';
 
 export class OrdersController {
     async index(request, response) {
-        const { search } = request.query;
+        const { keyword } = request.query;
 
         const ordersRepository = new OrdersRepository();
         const ordersService = new OrdersService(ordersRepository);
 
-        const dishes = await ordersService.index(search);
+        const dishes = await ordersService.index(keyword);
 
         return response.status(200).json(dishes);
     }
 
     async show(request, response) {
         const { id: user_id } = request.params;
+        const { keyword } = request.query;
 
         const ordersRepository = new OrdersRepository();
         const ordersService = new OrdersService(ordersRepository);
 
-        const dish = await ordersService.show({ user_id, dish_id });
+        const dish = await ordersService.show({ user_id, keyword });
 
         return response.status(200).json(dish);
     }
 
     async create(request, response) {
         const { dishes } = request.body;
-
+        //id e qtd
         const ordersRepository = new OrdersRepository();
         const ordersService = new OrdersService(ordersRepository);
 
@@ -36,7 +37,13 @@ export class OrdersController {
     }
 
     async update(request, response) {
-        const { id } = request.params;
+        const { order } = request.body;
+        //array de id, status
+
+        const ordersRepository = new OrdersRepository();
+        const ordersService = new OrdersService(ordersRepository);
+
+        await ordersService.update({ order });
 
         return response.status(200).json({});
     }
@@ -47,7 +54,7 @@ export class OrdersController {
         const ordersRepository = new OrdersRepository();
         const ordersService = new OrdersService(ordersRepository);
 
-        const order = await ordersService.delete({ id });
+        const order = await ordersService.delete(id);
 
         return response.status(202).json({});
     }
