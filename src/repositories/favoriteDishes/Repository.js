@@ -12,7 +12,7 @@ export class FavoriteDishesRepository {
             .select('dish.*', 'ingredient.name as ingredient_name')
             .innerJoin('ingredient', 'dish_id', 'dish.id')
             .innerJoin('favorite_dishes', 'dish_id', 'dish.id')
-            .where({ user_id })
+            .where({ 'favorite_dishes.user_id': user_id })
             .where(function () {
                 this.whereLike('ingredient_name', `%${keyword}%`);
                 this.orWhereLike('dish.name', `%${keyword}%`);
@@ -23,9 +23,9 @@ export class FavoriteDishesRepository {
     async findByDishIdAndUserId({ user_id, dish_id, keyword }) {
         const dish = await this.Dishes()
             .select('dish.*', 'ingredient.name as ingredient_name')
-            .innerJoin('ingredient', 'dish_id', 'dish.id')
-            .innerJoin('favorite_dishes', 'dish_id', 'dish.id')
-            .where({ user_id, dish_id })
+            .innerJoin('ingredient', 'ingredient.dish_id', 'dish.id')
+            .innerJoin('favorite_dishes', 'favorite_dishes.dish_id', 'dish.id')
+            .where({ 'favorite_dishes.user_id': user_id, 'favorite_dishes.dish_id': dish_id })
             .where(function () {
                 this.whereLike('ingredient_name', `%${keyword}%`);
                 this.orWhereLike('dish.name', `%${keyword}%`);

@@ -31,10 +31,11 @@ export class DishRepository {
     }
 
     async checkNameInUse({ name, id = null }) {
+        let dish = null;
         if (id) {
-            const dish = await this.Dishes().whereLike('name', name).whereNot({ id }).first();
+            dish = await this.Dishes().whereLike('name', name).whereNot({ id }).first();
         } else {
-            const dish = await this.Dishes().whereLike('name', name).first();
+            dish = await this.Dishes().whereLike('name', name).first();
         }
 
         return dish;
