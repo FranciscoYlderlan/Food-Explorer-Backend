@@ -3,12 +3,13 @@ import { FavoriteDishesService } from '../services/favoriteDishes/FavoriteDishes
 
 export class FavoriteDishesController {
     async index(request, response) {
+        const { user_id } = request.params;
         const { keyword } = request.query;
 
         const favoriteDishesRepository = new FavoriteDishesRepository();
         const favoriteDishesService = new FavoriteDishesService(favoriteDishesRepository);
 
-        const dishes = await favoriteDishesService.index(keyword);
+        const dishes = await favoriteDishesService.index({ user_id, keyword });
 
         return response.status(200).json(dishes);
     }
