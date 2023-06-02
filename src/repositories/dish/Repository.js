@@ -8,15 +8,20 @@ export class DishRepository {
     }
 
     async findById(id) {
-        const dish = await this.Dishes().where({ id }).first();
+        const dish = await this.Dishes()
+            .select('dish.*', 'favorite_dishes.id as isFavorite')
+            .where({ 'dish.id': id })
+            .leftJoin('favorite_dishes', 'favorite_dishes.dish_id', 'dish.id')
+            .first();
 
         return dish;
     }
 
     async findDishesByKeyword(keyword) {
         const dishes = await this.Dishes()
-            .select('dish.*', 'ingredient.name as ingredient_name')
-            .innerJoin('ingredient', 'dish_id', 'dish.id')
+            .select('dish.*', 'ingredient.name as ingredient_name', 'favorite_dishes.id as isFavorite')
+            .innerJoin('ingredient', 'ingredient.dish_id', 'dish.id')
+            .leftJoin('favorite_dishes', 'favorite_dishes.dish_id', 'dish.id')
             .whereLike('ingredient_name', `%${keyword}%`)
             .orWhereLike('dish.name', `%${keyword}%`)
             .groupBy('dish.id');

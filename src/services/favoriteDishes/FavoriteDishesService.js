@@ -4,7 +4,6 @@ export class FavoriteDishesService {
     }
 
     async index({ user_id, keyword }) {
-        console.log('entrei');
         const favoriteDishes = await this.repository.findAll({ user_id, keyword });
 
         return favoriteDishes;
@@ -23,6 +22,7 @@ export class FavoriteDishesService {
 
         if (hadAddedToFavorites) {
             const { favorite_dishes_id } = hadAddedToFavorites;
+
             await this.repository.delete(favorite_dishes_id);
         } else {
             await this.repository.insert({ user_id, dish_id });

@@ -38,7 +38,7 @@ export class DishService {
 
         ingredients = ingredients ?? [];
 
-        if (ingredients.lenght == 0) {
+        if (ingredients.length == 0) {
             throw new AppError('Informe os ingredientes do prato.');
         }
 

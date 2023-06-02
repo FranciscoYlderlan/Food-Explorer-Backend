@@ -27,7 +27,8 @@ export class OrdersController {
 
     async create(request, response) {
         const { dishes } = request.body;
-        //array de dish_id e qtd
+        const { user_id } = request.params;
+        //array de dish_id e qty
         const ordersRepository = new OrdersRepository();
         const ordersService = new OrdersService(ordersRepository);
 

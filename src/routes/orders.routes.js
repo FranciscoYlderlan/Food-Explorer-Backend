@@ -7,7 +7,7 @@ const ordersController = new OrdersController();
 
 ordersRoutes.get('/', ordersController.index);
 ordersRoutes.get('/:id', ordersController.show);
-ordersRoutes.post('/', ordersController.create);
+ordersRoutes.post('/:user_id', ordersController.create);
 ordersRoutes.patch('/', ordersController.update);
 ordersRoutes.delete('/', ordersController.delete);
 
