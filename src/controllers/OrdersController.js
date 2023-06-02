@@ -27,7 +27,7 @@ export class OrdersController {
 
     async create(request, response) {
         const { dishes } = request.body;
-        //id e qtd
+        //array de id e qtd
         const ordersRepository = new OrdersRepository();
         const ordersService = new OrdersService(ordersRepository);
 
@@ -37,24 +37,23 @@ export class OrdersController {
     }
 
     async update(request, response) {
-        const { order } = request.body;
-        //array de id, status
+        const { user_id, new_status, created_at } = request.body;
 
         const ordersRepository = new OrdersRepository();
         const ordersService = new OrdersService(ordersRepository);
 
-        await ordersService.update({ order });
+        await ordersService.update({ user_id, new_status, created_at });
 
         return response.status(200).json({});
     }
 
     async delete(request, response) {
         const { id } = request.params;
-
+        const { user_id, created_at } = request.body;
         const ordersRepository = new OrdersRepository();
         const ordersService = new OrdersService(ordersRepository);
 
-        const order = await ordersService.delete(id);
+        const order = await ordersService.delete(user_id, created_at);
 
         return response.status(202).json({});
     }

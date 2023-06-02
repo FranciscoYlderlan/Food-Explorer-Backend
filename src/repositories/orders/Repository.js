@@ -36,14 +36,25 @@ export class OrdersRepository {
         return dish;
     }
 
+    async findByOrder({ user_id, created_at }) {
+        const dish = await this.Orders().where({ user_id, created_at }).first();
+        return dish;
+    }
+
+    async updateStatus({ user_id, status_id, created_at }) {
+        const dish = await this.Orders().insert({ status_id }).where({ user_id, created_at });
+
+        return dish;
+    }
+
     async insert(dishes) {
         const dish = await this.Orders().insert([dishes]);
 
         return dish;
     }
 
-    async delete(id) {
-        const dish = await this.FavoriteDishes().where({ id }).del();
+    async delete({ user_id, created_at }) {
+        const dish = await this.FavoriteDishes().where(user_id, created_at).del();
 
         return dish;
     }

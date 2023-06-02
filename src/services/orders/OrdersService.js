@@ -11,7 +11,7 @@ export class OrdersService {
     }
 
     async show({ user_id, keyword }) {
-        const orders = await this.repository.findByUserId(user_id, keyword);
+        const orders = await this.repository.findByUserId({ user_id, keyword });
 
         return orders;
     }
@@ -25,17 +25,16 @@ export class OrdersService {
         return orders;
     }
 
-    async update({ order, id }) {
-        const hadAddedToOrders = await this.repository.findById({ user_id });
+    async update({ user_id, new_status, created_at }) {
+        const hadAddedToOrders = await this.repository.findByOrder({ user_id, created_at });
         if (hadAddedToOrders) {
-            const { id } = hadAddedToOrders;
-            await this.repository.updateStatus({ id, new_status });
+            await this.repository.updateStatus({ user_id, status_id: new_status, created_at });
         } else {
-            throw new AppError('Pedido não encontrado.');
+            throw new AppError('Pedido não encontrado.', 404);
         }
     }
 
-    async delete(id) {
-        await this.repository.delete(id);
+    async delete({ user_id, created_at }) {
+        await this.repository.delete({ user_id, created_at });
     }
 }
