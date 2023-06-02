@@ -1,15 +1,14 @@
 import { DishRepository } from '../repositories/dish/Repository.js';
 import { DishService } from '../services/dish/DishService.js';
-import knex from '../database/knex/index.js';
 
 export class DishController {
     async index(request, response) {
-        const { search } = request.query;
+        const { keyword } = request.query;
 
         const dishRepository = new DishRepository();
         const dishService = new DishService(dishRepository);
 
-        const dishes = await dishService.index(search);
+        const dishes = await dishService.index(keyword);
 
         return response.status(200).json(dishes);
     }

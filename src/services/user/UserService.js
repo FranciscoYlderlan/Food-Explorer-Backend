@@ -16,7 +16,7 @@ export class UserService {
 
         const encryptedPassword = await hash(password, 8);
 
-        const { id: profile_id } = await this.repository.findUserProfile('Usuário');
+        // const { id: profile_id } = await this.repository.findUserProfile('Usuário');
         const updated_at = dayjs().format();
         const created_at = dayjs().format();
 
@@ -25,7 +25,7 @@ export class UserService {
             password: encryptedPassword,
             email,
             avatar,
-            profile_id,
+            // profile_id,
             updated_at,
             created_at,
         });

@@ -3,18 +3,18 @@ import { FavoriteDishesService } from '../services/favoriteDishes/FavoriteDishes
 
 export class FavoriteDishesController {
     async index(request, response) {
-        const { search } = request.query;
+        const { keyword } = request.query;
 
         const favoriteDishesRepository = new FavoriteDishesRepository();
         const favoriteDishesService = new FavoriteDishesService(favoriteDishesRepository);
 
-        const dishes = await favoriteDishesService.index(search);
+        const dishes = await favoriteDishesService.index(keyword);
 
         return response.status(200).json(dishes);
     }
 
     async show(request, response) {
-        const { id: user_id } = request.params;
+        const { user_id, dish_id } = request.params;
 
         const favoriteDishesRepository = new FavoriteDishesRepository();
         const favoriteDishesService = new FavoriteDishesService(favoriteDishesRepository);
@@ -31,14 +31,14 @@ export class FavoriteDishesController {
     }
 
     async update(request, response) {
-        const { id } = request.params;
+        const { user_id, dish_id } = request.params;
 
         const favoriteDishesRepository = new FavoriteDishesRepository();
         const favoriteDishesService = new FavoriteDishesService(favoriteDishesRepository);
 
         await favoriteDishesService.update({
             user_id,
-            dish_id: id,
+            dish_id,
         });
 
         return response.status(200).json({});

@@ -1,16 +1,12 @@
 export async function up(knex) {
     return knex.schema
-        .createTable('category', (table) => {
+        .createTable('category', table => {
             table.increments('id').notNullable().primary();
             table.text('name').notNullable();
             table.text('description').nullable();
         })
         .then(() => {
-            return knex('category').insert([
-                { name: 'Refeição' },
-                { name: 'Bebida' },
-                { name: 'Sobremesa' },
-            ]);
+            return knex('category').insert([{ name: 'Refeição' }, { name: 'Bebida' }, { name: 'Sobremesa' }]);
         });
 }
 

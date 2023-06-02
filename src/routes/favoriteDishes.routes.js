@@ -6,7 +6,7 @@ const favoriteDishesRoutes = Router();
 const favoriteDishesController = new FavoriteDishesController();
 
 favoriteDishesRoutes.get('/', favoriteDishesController.index);
-favoriteDishesRoutes.get('/:id', favoriteDishesController.show);
-favoriteDishesRoutes.patch('/:id', favoriteDishesController.update);
+favoriteDishesRoutes.get('/:user_id/:dish_id', favoriteDishesController.show);
+favoriteDishesRoutes.patch('/:user_id/:dish_id', favoriteDishesController.update);
 
 export { favoriteDishesRoutes };
