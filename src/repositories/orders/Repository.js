@@ -10,9 +10,9 @@ export class OrdersRepository {
     async findAll(keyword) {
         const dishes = await this.Dishes()
             .select(
-                'dish.*',
                 'orders.user_id',
                 'orders.created_at',
+                'dish.*',
                 'ingredient.name as ingredient_name',
                 knex.raw('(qty * price) as sale_price')
             )
@@ -20,7 +20,8 @@ export class OrdersRepository {
             .innerJoin('orders', 'orders.dish_id', 'dish.id')
             .whereLike('ingredient_name', `%${keyword}%`)
             .orWhereLike('dish.name', `%${keyword}%`)
-            .groupBy(['orders.created_at', 'dish.name']);
+            .groupBy(['orders.created_at', 'dish.name'])
+            .orderBy(['orders.user_id', 'orders.created_at']);
 
         return dishes;
     }
