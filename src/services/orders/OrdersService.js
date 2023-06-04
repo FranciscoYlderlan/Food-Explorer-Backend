@@ -8,8 +8,33 @@ export class OrdersService {
 
     async index(keyword) {
         const allOrders = await this.repository.findAll(keyword);
-        
-        return allOrders;
+
+        const result = [];
+        const seen = new Set();
+
+        let details = '';
+        let total_price = 0;
+
+        for (const obj of allOrders) {
+            const { user_id, created_at, name, qty, sale_price } = obj;
+
+            const key = `${user_id}-${created_at}`;
+
+            if (!seen.has(key)) {
+                result.push({ user_id, created_at, details, total_price });
+                seen.add(key);
+            }
+
+            const index = result.findIndex(
+                item => item.user_id === user_id && item.created_at === created_at
+            );
+            result[index].details += `${qty} x ${name}, `;
+            result[index].total_price += sale_price;
+
+            //result[index].details.push({ qty, name });
+        }
+
+        return result;
     }
 
     async show({ user_id, keyword }) {

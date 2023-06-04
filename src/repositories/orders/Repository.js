@@ -12,7 +12,12 @@ export class OrdersRepository {
             .select(
                 'orders.user_id',
                 'orders.created_at',
-                'dish.*',
+                'dish.id',
+                'dish.name',
+                'dish.category_id',
+                'dish.price',
+                'orders.qty',
+                'orders.status_id',
                 'ingredient.name as ingredient_name',
                 knex.raw('(qty * price) as sale_price')
             )
