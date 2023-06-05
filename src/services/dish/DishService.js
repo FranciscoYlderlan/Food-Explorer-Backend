@@ -18,12 +18,12 @@ export class DishService {
         //     })
         // );
 
-        const dishesByCategory = dishes.reduce((acumulator, object) => {
-            const category_id = object.category_id;
+        const dishesByCategory = dishes.reduce((acumulator, dish) => {
+            const category_id = dish.category_id;
             if (!acumulator[category_id]) {
                 acumulator[category_id] = [];
             }
-            acumulator[category_id].push(object);
+            acumulator[category_id].push(dish);
             return acumulator;
         }, {});
 
