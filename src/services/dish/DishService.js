@@ -8,17 +8,26 @@ export class DishService {
     async index(keyword) {
         const dishes = await this.repository.findDishesByKeyword(keyword);
 
-        const dishesWithIngredients = await Promise.all(
-            dishes.map(async dish => {
-                const ingredients = await this.repository.findAllDishIngredients(dish.id);
-                return {
-                    ...dish,
-                    ingredients,
-                };
-            })
-        );
+        // const dishesWithIngredients = await Promise.all(
+        //     dishes.map(async dish => {
+        //         const ingredients = await this.repository.findAllDishIngredients(dish.id);
+        //         return {
+        //             ...dish,
+        //             ingredients,
+        //         };
+        //     })
+        // );
 
-        return dishesWithIngredients;
+        const dishesByCategory = dishes.reduce((acumulator, object) => {
+            const category_id = object.category_id;
+            if (!acumulator[category_id]) {
+                acumulator[category_id] = [];
+            }
+            acumulator[category_id].push(object);
+            return acumulator;
+        }, {});
+
+        return dishesByCategory;
     }
     async show(id) {
         const dish = await this.repository.findById(id);
