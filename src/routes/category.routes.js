@@ -5,6 +5,8 @@ const categoryRoutes = Router();
 
 const categoryController = new CategoryController();
 
+categoryRoutes.use(ensureAuthentication);
+
 categoryRoutes.get('/', categoryController.index);
 categoryRoutes.get('/:id', categoryController.show);
 categoryRoutes.post('/', categoryController.create);
