@@ -1,6 +1,7 @@
 import Router from 'express';
 import { StatusController } from '../controllers/StatusController.js';
 import { ensureAuthentication } from '../middlewares/ensureAuthentication.js';
+import { ensureUserIsAdmin } from '../middlewares/ensureUserIsAdmin.js';
 
 const statusRoutes = Router();
 
@@ -10,8 +11,8 @@ statusRoutes.use(ensureAuthentication);
 
 statusRoutes.get('/', statusController.index);
 statusRoutes.get('/:id', statusController.show);
-statusRoutes.post('/', statusController.create);
-statusRoutes.put('/', statusController.update);
-statusRoutes.delete('/:id', statusController.delete);
+statusRoutes.post('/', ensureUserIsAdmin, statusController.create);
+statusRoutes.put('/', ensureUserIsAdmin, statusController.update);
+statusRoutes.delete('/:id', ensureUserIsAdmin, statusController.delete);
 
 export { statusRoutes };

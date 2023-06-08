@@ -1,5 +1,3 @@
-import jwt from 'jsonwebtoken';
-import authConfigs from '../configs/auth.js';
 import { AppError } from '../utils/AppError.js';
 
 export function ensureUserIsAdmin(request, response, next) {

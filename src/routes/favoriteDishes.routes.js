@@ -2,6 +2,7 @@ import Router from 'express';
 import { FavoriteDishesController } from '../controllers/FavoriteDishesController.js';
 import { ensureAuthentication } from '../middlewares/ensureAuthentication.js';
 
+
 const favoriteDishesRoutes = Router();
 
 const favoriteDishesController = new FavoriteDishesController();

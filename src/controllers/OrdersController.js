@@ -14,7 +14,7 @@ export class OrdersController {
     }
 
     async show(request, response) {
-        const { id: user_id } = request.params;
+        const { user_id } = request.params;
         const { keyword } = request.query;
 
         const ordersRepository = new OrdersRepository();
