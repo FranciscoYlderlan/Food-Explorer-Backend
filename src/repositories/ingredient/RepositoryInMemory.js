@@ -6,9 +6,9 @@ export class IngredientRepositoryInMemory {
     }
 
     async findAll() {
-        const ingredientes = this.Ingredients;
+        const ingredients = this.Ingredients;
 
-        return ingredientes;
+        return ingredients;
     }
     async findById(id) {
         const [ingredients] = this.Ingredients.filter(ingredient => ingredient.id == id);

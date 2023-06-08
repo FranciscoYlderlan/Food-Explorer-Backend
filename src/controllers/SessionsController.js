@@ -1,16 +1,16 @@
 import knex from '../database/knex/index.js';
-import AppError from '../utils/AppError.js';
+import { AppError } from '../utils/AppError.js';
 import { compare } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import authConfigs from '../configs/auth.js';
 
-export default class SessionsController {
+export class SessionsController {
     async create(request, response) {
         const { password, email } = request.body;
 
-        const Tusers = () => knex('User');
+        const Users = () => knex('user');
 
-        const user = await Tusers().where({ email }).first();
+        const user = await Users().where({ email }).first();
 
         if (!user) {
             throw new AppError('Email e/ou senha incorretos', 401);
@@ -22,10 +22,12 @@ export default class SessionsController {
             throw new AppError('Email e/ou senha incorretos', 401);
         }
 
+        const isAdmin = user.profile_id == 1;
+
         const { secret, expiresIn } = authConfigs.jwt;
         const { sign } = jwt;
 
-        const token = sign({}, secret, {
+        const token = sign({ isAdmin }, secret, {
             subject: String(user.id),
             expiresIn,
         });

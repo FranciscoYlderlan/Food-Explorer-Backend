@@ -1,5 +1,6 @@
 import Router from 'express';
 import { UserController } from '../controllers/UserController.js';
+import { ensureAuthentication } from '../middlewares/ensureAuthentication.js';
 
 const userRoutes = Router();
 

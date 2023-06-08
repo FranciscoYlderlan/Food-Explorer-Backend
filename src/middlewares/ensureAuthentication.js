@@ -13,12 +13,12 @@ export function ensureAuthentication(request, response, next) {
 
     try {
         const { secret } = authConfigs.jwt;
-        const { sub: user_id } = verify(token, secret);
+        const { sub: user_id, isAdmin } = verify(token, secret);
 
         request.user = {
             id: Number(user_id),
+            isAdmin: Boolean(isAdmin),
         };
-
         return next();
     } catch (error) {
         throw new AppError('JWT Token inválido', 401);

@@ -18,13 +18,13 @@ export class DishService {
         //     })
         // );
 
-        const dishesByCategory = dishes.reduce((acumulator, dish) => {
+        const dishesByCategory = dishes.reduce((accumulator, dish) => {
             const category_id = dish.category_id;
-            if (!acumulator[category_id]) {
-                acumulator[category_id] = [];
+            if (!accumulator[category_id]) {
+                accumulator[category_id] = [];
             }
-            acumulator[category_id].push(dish);
-            return acumulator;
+            accumulator[category_id].push(dish);
+            return accumulator;
         }, {});
 
         return dishesByCategory;
@@ -93,7 +93,7 @@ export class DishService {
 
         ingredients = ingredients ?? [];
 
-        if (ingredients.lenght == 0) {
+        if (ingredients.length == 0) {
             throw new AppError('Informe os ingredientes do prato.');
         }
         const ingredientsInsert = ingredients.map(ingredient => {

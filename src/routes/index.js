@@ -7,6 +7,7 @@ import { statusRoutes } from './status.routes.js';
 import { dishRoutes } from './dish.routes.js';
 import { categoryRoutes } from './category.routes.js';
 import { ingredientRoutes } from './ingredient.routes.js';
+import { sessionsRoutes } from './sessions.routes.js';
 
 const routes = Router();
 
@@ -18,5 +19,6 @@ routes.use('/orders', ordersRoutes);
 routes.use('/dish', dishRoutes);
 routes.use('/category', categoryRoutes);
 routes.use('/ingredient', ingredientRoutes);
+routes.use('/sessions', sessionsRoutes);
 
 export { routes };

@@ -1,5 +1,6 @@
 import Router from 'express';
 import { CategoryController } from '../controllers/CategoryController.js';
+import { ensureAuthentication } from '../middlewares/ensureAuthentication.js';
 
 const categoryRoutes = Router();
 
@@ -13,4 +14,4 @@ categoryRoutes.post('/', categoryController.create);
 categoryRoutes.put('/', categoryController.update);
 categoryRoutes.delete('/:id', categoryController.delete);
 
-export  { categoryRoutes };
+export { categoryRoutes };
