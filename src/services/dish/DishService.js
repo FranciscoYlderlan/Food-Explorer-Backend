@@ -1,5 +1,6 @@
 import dayjs from '../../configs/dayjs.js';
 import { AppError } from '../../utils/AppError.js';
+import { DiskStorage } from '../../providers/DiskStorage.js';
 
 export class DishService {
     constructor(repository) {
@@ -40,7 +41,8 @@ export class DishService {
 
         return dishWithIngredients;
     }
-    async create({ name, description, picture, price, category_id, ingredients }) {
+
+    async create({ name, description, picture, avatar, price, category_id, ingredients }) {
         const nameInUse = await this.repository.checkNameInUse({ name });
 
         if (nameInUse) throw new AppError('Nome do prato já cadastrado.', 409);
@@ -82,8 +84,6 @@ export class DishService {
         const nameInUse = await this.repository.checkNameInUse({ name, id });
 
         if (nameInUse) throw new AppError('Nome do prato já cadastrado.', 409);
-
-        // check if is string typeof myVar === 'string' || myVar instanceof String
 
         dish.name = name ?? dish.name;
         dish.description = description ?? dish.description;

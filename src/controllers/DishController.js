@@ -25,22 +25,37 @@ export class DishController {
     }
 
     async create(request, response) {
-        const { name, description, picture, price, category_id, ingredients } = request.body;
+        const { name, description, picture, category_id, ingredients } = request.body;
+
+        const filename = request.file.filename;
 
         const dishRepository = new DishRepository();
         const dishService = new DishService(dishRepository);
 
-        await dishService.create({ name, description, picture, price, category_id, ingredients });
+        picture = filename ?? picture;
+
+        await dishService.create({
+            name,
+            description,
+            picture,
+            price,
+            category_id,
+            ingredients,
+        });
 
         return response.status(201).json({});
     }
 
     async update(request, response) {
-        const { name, description, picture, price, category_id, ingredients } = request.body;
+        const filename = request.file.filename;
         const { id } = request.params;
+
+        const { name, description, picture, price, category_id, ingredients } = request.body;
 
         const dishRepository = new DishRepository();
         const dishService = new DishService(dishRepository);
+
+        picture = filename ?? picture;
 
         await dishService.update({
             id,

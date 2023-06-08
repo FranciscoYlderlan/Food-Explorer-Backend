@@ -3,7 +3,7 @@ import 'express-async-errors';
 import { AppError } from './utils/AppError.js';
 import { routes } from './routes/index.js';
 
-import { sqliteConnection } from './database/sqlite/index.js';
+import uploadConfigs from './configs/uploads.js';
 
 const PORT = '3333';
 
@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use(routes);
 
-sqliteConnection();
+app.use('/files', express.static(uploadConfigs.UPLOADS_FOLDER));
 
 app.use((error, request, response, next) => {
     const clientError = error instanceof AppError;
