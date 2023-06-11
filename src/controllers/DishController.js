@@ -25,7 +25,7 @@ export class DishController {
     }
 
     async create(request, response) {
-        const { name, description, picture, category_id, ingredients } = request.body;
+        let { name, description, picture, price, category_id, ingredients } = request.body;
 
         const filename = request.file.filename;
 

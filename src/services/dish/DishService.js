@@ -48,7 +48,7 @@ export class DishService {
 
         if (nameInUse) throw new AppError('Nome do prato já cadastrado.', 409);
 
-        ingredients = ingredients ?? [];
+        ingredients = JSON.parse(ingredients) ?? [];
 
         if (ingredients.length == 0) {
             throw new AppError('Informe os ingredientes do prato.');
