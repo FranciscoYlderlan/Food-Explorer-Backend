@@ -56,9 +56,9 @@ export class UserService {
             user.password = encryptedPassword;
         }
 
-        const { id: profile_id } = await this.repository.findUserProfile('Usuário');
+        // const { id: profile_id } = await this.repository.findUserProfile('Usuário');
+        // user.profile_id = profile_id;
 
-        user.profile_id = profile_id;
         user.updated_at = dayjs().format();
 
         await this.repository.update(user);
