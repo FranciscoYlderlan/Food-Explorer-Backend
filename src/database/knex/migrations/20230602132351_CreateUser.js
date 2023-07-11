@@ -20,7 +20,7 @@ export async function up(knex) {
             });
         });
 }
-
+//TODO: adicionar esse hash dentro de variáveis de ambiente
 export async function down(knex) {
     return knex.schema.dropTable('user');
 }
