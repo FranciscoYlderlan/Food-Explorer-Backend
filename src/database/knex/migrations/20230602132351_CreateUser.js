@@ -13,14 +13,13 @@ export async function up(knex) {
         .then(() => {
             return knex('user').insert({
                 name: 'admin',
-                password: '$2a$08$eu1sJWVZPuBqBW5dNo2A/.D7lWkOBLRWamkfJjX7I.Kl6WiAZIbva',
+                password: process.env.ADMIN_PASSWORD,
                 email: 'admin@email.com',
                 avatar: null,
                 profile_id: 1,
             });
         });
 }
-//TODO: adicionar esse hash dentro de variáveis de ambiente
 export async function down(knex) {
     return knex.schema.dropTable('user');
 }

@@ -3,9 +3,10 @@ import 'express-async-errors';
 import { AppError } from './utils/AppError.js';
 import { routes } from './routes/index.js';
 import cors from 'cors';
+import 'dotenv/config.js';
 import uploadConfigs from './configs/uploads.js';
 
-const PORT = '3333';
+const PORT = process.env.SERVER_PORT || '3333';
 
 const app = express();
 
