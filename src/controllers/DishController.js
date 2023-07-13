@@ -26,13 +26,15 @@ export class DishController {
 
     async create(request, response) {
         let { name, description, picture, price, category_id, ingredients } = request.body;
+        let filename = picture;
 
-        const filename = request.file.filename;
+        if (request.file) filename = request.file.filename;
 
         const dishRepository = new DishRepository();
         const dishService = new DishService(dishRepository);
 
         picture = filename ?? picture;
+        picture = picture === 'undefined' ? null : picture;
 
         await dishService.create({
             name,
