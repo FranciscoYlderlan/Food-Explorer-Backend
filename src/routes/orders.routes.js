@@ -10,7 +10,7 @@ const ordersController = new OrdersController();
 ordersRoutes.use(ensureAuthentication);
 
 ordersRoutes.get('/', ensureUserIsAdmin, ordersController.index);
-ordersRoutes.get('/', ordersController.show);
+ordersRoutes.get('/history', ordersController.show);
 ordersRoutes.post('/', ordersController.create);
 ordersRoutes.patch('/', ensureUserIsAdmin, ordersController.update);
 ordersRoutes.delete('/', ensureUserIsAdmin, ordersController.delete);
