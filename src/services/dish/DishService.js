@@ -6,8 +6,8 @@ export class DishService {
     constructor(repository) {
         this.repository = repository;
     }
-    async index(keyword) {
-        const dishes = await this.repository.findDishesByKeyword(keyword);
+    async index({ keyword, user_id }) {
+        const dishes = await this.repository.findDishesByKeyword({ keyword, user_id });
 
         // const dishesWithIngredients = await Promise.all(
         //     dishes.map(async dish => {

@@ -8,9 +8,7 @@ export class DishRepositoryInMemory {
     }
 
     async findByName(name) {
-        const dish = await this.Dishes.filter(
-            dish => dish.name.toLowerCase() == name.toLowerCase()
-        );
+        const dish = await this.Dishes.filter(dish => dish.name.toLowerCase() == name.toLowerCase());
 
         return dish;
     }
@@ -21,13 +19,11 @@ export class DishRepositoryInMemory {
         return dish;
     }
 
-    async findDishesByKeyword(keyword) {
+    async findDishesByKeyword({ keyword, user_id }) {
         // inner join
 
         let dishes = await this.Dishes.map(dish => {
-            const ingredients = this.Ingredients.filter(
-                ingredient => ingredient.dish_id == dish.id
-            );
+            const ingredients = this.Ingredients.filter(ingredient => ingredient.dish_id == dish.id);
             return {
                 ...dish,
                 ingredients,
@@ -62,9 +58,7 @@ export class DishRepositoryInMemory {
     }
 
     async findAllDishIngredients(dish_id) {
-        const ingredients = await this.Ingredients.filter(
-            ingredient => ingredient.dish_id == dish_id
-        );
+        const ingredients = await this.Ingredients.filter(ingredient => ingredient.dish_id == dish_id);
 
         return ingredients;
     }
@@ -77,9 +71,7 @@ export class DishRepositoryInMemory {
                 dish => dish.name.toLowerCase() == name.toLowerCase() && dish.id !== id
             );
         } else {
-            [dish] = await this.Dishes.filter(
-                dish => dish.name.toLowerCase() == name.toLowerCase()
-            );
+            [dish] = await this.Dishes.filter(dish => dish.name.toLowerCase() == name.toLowerCase());
         }
 
         return dish;
@@ -106,9 +98,7 @@ export class DishRepositoryInMemory {
     }
 
     async removeIngredientsByDish(dish_id) {
-        this.Ingredients = await this.Ingredients.filter(
-            ingredient => ingredient.dish_id != dish_id
-        );
+        this.Ingredients = await this.Ingredients.filter(ingredient => ingredient.dish_id != dish_id);
 
         return this.Ingredients;
     }

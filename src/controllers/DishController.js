@@ -4,11 +4,12 @@ import { DishService } from '../services/dish/DishService.js';
 export class DishController {
     async index(request, response) {
         const { keyword } = request.query;
+        const user_id = request.user.id;
 
         const dishRepository = new DishRepository();
         const dishService = new DishService(dishRepository);
 
-        const dishes = await dishService.index(keyword);
+        const dishes = await dishService.index({ keyword, user_id });
 
         return response.status(200).json(dishes);
     }

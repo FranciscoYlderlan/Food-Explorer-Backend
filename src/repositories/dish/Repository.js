@@ -17,11 +17,17 @@ export class DishRepository {
         return dish;
     }
 
-    async findDishesByKeyword(keyword) {
+    async findDishesByKeyword({ keyword, user_id }) {
         const dishes = await this.Dishes()
             .select('dish.*', 'ingredient.name as ingredient_name', 'favorite_dishes.id as isFavorite')
             .innerJoin('ingredient', 'ingredient.dish_id', 'dish.id')
-            .leftJoin('favorite_dishes', 'favorite_dishes.dish_id', 'dish.id')
+            .leftJoin('favorite_dishes', function () {
+                this.on('favorite_dishes.dish_id', '=', 'dish.id').andOn(
+                    'favorite_dishes.user_id',
+                    '=',
+                    user_id
+                );
+            })
             .whereLike('ingredient_name', `%${keyword}%`)
             .orWhereLike('dish.name', `%${keyword}%`)
             .groupBy('dish.id');
