@@ -26,7 +26,9 @@ export class DishController {
     }
 
     async create(request, response) {
-        let { name, description, picture, price, category_id, ingredients } = request.body;
+        let { name, description, price, category_id, ingredients } = request.body;
+
+        let { picture } = request.body;
         let filename = picture;
 
         if (request.file) filename = request.file.filename;
@@ -51,8 +53,8 @@ export class DishController {
 
     async update(request, response) {
         const { id } = request.params;
-        const { name, description, picture, price, category_id, ingredients } = request.body;
-
+        const { name, description, price, category_id, ingredients } = request.body;
+        let { picture } = request.body;
         let filename = picture;
 
         if (request.file) filename = request.file.filename;
