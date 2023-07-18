@@ -50,15 +50,18 @@ export class DishController {
     }
 
     async update(request, response) {
-        const filename = request.file.filename;
         const { id } = request.params;
-
         const { name, description, picture, price, category_id, ingredients } = request.body;
+
+        let filename = picture;
+
+        if (request.file) filename = request.file.filename;
 
         const dishRepository = new DishRepository();
         const dishService = new DishService(dishRepository);
 
         picture = filename ?? picture;
+        picture = picture === 'undefined' ? null : picture;
 
         await dishService.update({
             id,
