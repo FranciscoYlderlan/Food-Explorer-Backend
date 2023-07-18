@@ -73,7 +73,7 @@ export class DishService {
 
         const ingredientsInsert = ingredients.map(ingredient => {
             return {
-                ...ingredient,
+                name: ingredient.name,
                 dish_id,
             };
         });
@@ -89,10 +89,9 @@ export class DishService {
         if (nameInUse) throw new AppError('Nome do prato já cadastrado.', 409);
 
         ingredients = JSON.parse(ingredients) ?? [];
-
         const ingredientsInsert = ingredients.map(ingredient => {
             return {
-                ...ingredient,
+                name: ingredient.name,
                 dish_id: dish.id,
             };
         });
