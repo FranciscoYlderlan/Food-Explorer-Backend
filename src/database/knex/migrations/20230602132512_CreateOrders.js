@@ -1,6 +1,7 @@
 export async function up(knex) {
     return knex.schema.createTable('orders', table => {
         table.increments('id').notNullable().primary();
+        table.text('code').notNullable();
         table.integer('qty').defaultTo(1);
         table.integer('status_id').defaultTo(1).references('id').inTable('status').onDelete('CASCADE');
         table.integer('dish_id').notNullable().references('id').inTable('dish').onDelete('CASCADE');

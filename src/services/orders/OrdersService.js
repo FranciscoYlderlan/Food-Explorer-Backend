@@ -76,8 +76,14 @@ export class OrdersService {
         const updated_at = dayjs().format();
         const created_at = dayjs().format();
 
+        const data = new Date(created_at);
+        const timestamp = Math.floor(data.getTime() / 1000);
+
+        const code = `${timestamp}${user_id}`;
+
         const dishesToInsert = dishes.map(dish => ({
             user_id: Number(user_id),
+            code,
             dish_id: dish.id,
             qty: dish.qty,
             updated_at,

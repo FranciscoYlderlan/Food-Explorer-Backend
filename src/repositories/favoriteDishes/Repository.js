@@ -16,7 +16,8 @@ export class FavoriteDishesRepository {
             .where(function () {
                 this.whereLike('ingredient_name', `%${keyword}%`);
                 this.orWhereLike('dish.name', `%${keyword}%`);
-            });
+            })
+            .groupBy('dish.id');
 
         return dishes;
     }

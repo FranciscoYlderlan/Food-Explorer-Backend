@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
+const admin_password = process.env.ADMIN_PASSWORD || null;
 export async function up(knex) {
     return knex.schema
         .createTable('user', table => {
@@ -13,8 +17,8 @@ export async function up(knex) {
         .then(() => {
             return knex('user').insert({
                 name: 'admin',
-                password: process.env.ADMIN_PASSWORD,
-                email: 'admin@email.com',
+                password: admin_password,
+                email: 'admin@gmail.com',
                 avatar: null,
                 profile_id: 1,
             });
