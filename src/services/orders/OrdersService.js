@@ -16,12 +16,12 @@ export class OrdersService {
         let total_price = 0;
 
         for (const obj of allOrders) {
-            const { user_id, created_at, status_id, name, qty, sale_price } = obj;
+            const { code, user_id, created_at, status_id, name, qty, sale_price } = obj;
 
             const key = `${user_id}-${created_at}`;
 
             if (!seen.has(key)) {
-                result.push({ user_id, status_id, created_at, details, total_price });
+                result.push({ code, user_id, status_id, created_at, details, total_price });
                 seen.add(key);
             }
 
@@ -48,12 +48,12 @@ export class OrdersService {
         let total_price = 0;
 
         for (const obj of orders) {
-            const { user_id, created_at, status_id, name, qty, sale_price } = obj;
+            const { code, user_id, created_at, status_id, name, qty, sale_price } = obj;
 
             const key = `${user_id}-${created_at}`;
 
             if (!seen.has(key)) {
-                result.push({ user_id, status_id, created_at, details, total_price });
+                result.push({ code, user_id, status_id, created_at, details, total_price });
                 seen.add(key);
             }
 
