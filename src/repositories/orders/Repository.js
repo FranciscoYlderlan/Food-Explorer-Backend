@@ -24,11 +24,14 @@ export class OrdersRepository {
             )
             .innerJoin('ingredient', 'ingredient.dish_id', 'dish.id')
             .innerJoin('orders', 'orders.dish_id', 'dish.id')
-            .whereLike('ingredient_name', `%${keyword}%`)
-            .orWhereLike('dish.name', `%${keyword}%`)
+            .innerJoin('status', 'status.id', 'orders.status_id')
+            // .whereLike('ingredient_name', `%${keyword}%`)
+            // .orWhereLike('dish.name', `%${keyword}%`)
+            .whereLike('status.name', `%${keyword}%`)
             .groupBy(['orders.created_at', 'dish.name'])
-            .orderBy(['orders.user_id', 'orders.created_at']);
-
+            .orderBy('orders.created_at', 'desc');
+        // .toSQL();
+        // console.log(dishes);
         return dishes;
     }
     async findByUserId({ user_id, keyword }) {
@@ -48,12 +51,15 @@ export class OrdersRepository {
             )
             .innerJoin('ingredient', 'ingredient.dish_id', 'dish.id')
             .innerJoin('orders', 'orders.dish_id', 'dish.id')
+            .innerJoin('status', 'status.id', 'orders.status_id')
             .where({ 'orders.user_id': user_id })
             .where(function () {
-                this.whereLike('ingredient_name', `%${keyword}%`);
-                this.orWhereLike('dish.name', `%${keyword}%`);
+                // this.whereLike('ingredient_name', `%${keyword}%`);
+                // this.orWhereLike('dish.name', `%${keyword}%`);
+                this.whereLike('status.name', `%${keyword}%`);
             })
-            .groupBy(['orders.created_at', 'dish.name']);
+            .groupBy(['orders.created_at', 'dish.name'])
+            .orderBy('orders.created_at', 'desc');
 
         return dish;
     }

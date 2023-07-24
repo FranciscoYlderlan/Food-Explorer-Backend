@@ -76,6 +76,8 @@ export class OrdersService {
         const updated_at = dayjs().format();
         const created_at = dayjs().format();
 
+        // dishes = JSON.parse(dishes);
+
         const data = new Date(created_at);
         const timestamp = Math.floor(data.getTime() / 1000);
 
