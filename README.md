@@ -54,13 +54,13 @@ Para executar a API localmente, siga os passos abaixo:
 npm install
 ```
 
-1. Execute as migrações para criar as tabelas do banco de dados:
+4. Execute as migrações para criar as tabelas do banco de dados:
 
 ```bash
 npm run migrate
 ```
 
-2. Inicie o servidor de desenvolvimento:
+5. Inicie o servidor de desenvolvimento:
 
 ```bash
 npm run dev
