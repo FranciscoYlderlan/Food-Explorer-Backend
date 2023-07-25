@@ -8,7 +8,7 @@ A aplicação está implantada em dois ambientes diferentes:
 
 ### Ambiente de Produção
 
-O ambiente de produção contém dados já inseridos e está disponível em: [URL de Produção](https://food-explorer-prod.vercel.app/)
+O ambiente de produção contém dados já inseridos e está disponível em: [URL da API de Produção](https://food-explorer-api-prod.onrender.com)
 
 **Usuário Admin:**
 
@@ -24,7 +24,7 @@ O ambiente de produção contém dados já inseridos e está disponível em: [UR
 
 ### Ambiente de Desenvolvimento
 
-O ambiente de desenvolvimento não contém dados registrados e está disponível em: [URL de Desenvolvimento](https://food-explorer-dev.netlify.app/)
+O ambiente de desenvolvimento não contém dados registrados e está disponível em: [URL da API de Desenvolvimento](https://food-explorer-api-dev.onrender.com)
 
 **Usuário Admin:**
 
