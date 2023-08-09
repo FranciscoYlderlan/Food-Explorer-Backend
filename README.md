@@ -53,7 +53,7 @@ Para executar a API localmente, siga os passos abaixo:
 ```bash
 npm install
 ```
-4. Adicione o token criptografado do admin no arquivo .env:
+4. Adicione a senha criptografado do admin no arquivo .env:
    
 ```bash
    ADMIN_PASSWORD=$2a$08$eu1sJWVZPuBqBW5dNo2A/.D7lWkOBLRWamkfJjX7I.Kl6WiAZIbva
